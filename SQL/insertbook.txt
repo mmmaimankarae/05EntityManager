@@ -1,0 +1,4 @@
+INSERT INTO BOOK (ID, DESCRIPTION, ILLUSTRATIONS, ISBN, NBOFPAGES, PRICE, TITLE, VERSION) VALUES 
+(1, 'Science fiction comedy book', 0, '1-84023-742-2', 354, 12.5, 'The Hitchhiker''s Guide to the Galaxy', 1),
+(2, 'Science fiction comedy book', 0, '1-84023-742-3', 354, 13.5, 'The ABC Guide to the Galaxy', 1);
+

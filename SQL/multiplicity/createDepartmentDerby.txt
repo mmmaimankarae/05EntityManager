@@ -1,0 +1,5 @@
+create table department 
+(
+departmentID int not null primary key generated always as identity (START WITH 1, INCREMENT BY 1),
+name varchar(80)
+);

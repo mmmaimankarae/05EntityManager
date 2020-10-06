@@ -1,0 +1,10 @@
+create table ADDRESS (
+  ID BIGINT not null,
+  STREET VARCHAR(255),
+  CITY VARCHAR(255),
+  ZIPCODE VARCHAR(255),
+  COUNTRY VARCHAR(255),
+  primary key (ID),
+  customer_FK BIGINT,
+  foreign key (customer_FK) references CUSTOMER(ID)	
+);
