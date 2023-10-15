@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package model;
 
 import java.io.Serializable;
@@ -21,10 +15,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author sarun
- */
 @Entity
 @Table(name = "CUSTOMER")
 @XmlRootElement
@@ -46,10 +36,10 @@ public class Customer implements Serializable {
     private String lastname;
     @Column(name = "EMAIL")
     private String email;
-    //@OneToOne(mappedBy = "customerFk", 
-    //        cascade=CascadeType.REMOVE)
-    @OneToOne(mappedBy = "customerFk", 
-          orphanRemoval=true)
+    /* @OneToOne(mappedBy = "customerFk", cascade=CascadeType.REMOVE) */
+        /* setว่าไม่สร้างความสัมพันธ์ ตัวข้อมูลจะถูกลบอัตโนมัติ */
+    /* @OneToOne(mappedBy = "customerFk", orphanRemoval=true) */
+    @OneToOne(mappedBy = "customerFk")
     private Address addressId;
 
     public Customer(Long id, String firstname, String lastname, String email) {
@@ -100,12 +90,12 @@ public class Customer implements Serializable {
 
     @XmlTransient
     public Address getAddressId() {
-         return addressId;
-     }
+        return addressId;
+    }
 
-     public void setAddressId(Address addressId) {
-         this.addressId = addressId;
-}
+    public void setAddressId(Address addressId) {
+        this.addressId = addressId;
+    }
 
     @Override
     public int hashCode() {
@@ -116,7 +106,6 @@ public class Customer implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Customer)) {
             return false;
         }
@@ -131,5 +120,4 @@ public class Customer implements Serializable {
     public String toString() {
         return "model.Customer[ id=" + id + " ]";
     }
-    
 }

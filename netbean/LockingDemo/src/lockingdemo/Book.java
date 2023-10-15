@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lockingdemo;
 
 import java.io.Serializable;
@@ -13,10 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-/**
- *
- * @author sarun
- */
 @Entity
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -73,7 +64,6 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-
     public float getPrice() {
         return price;
     }
@@ -82,21 +72,10 @@ public class Book implements Serializable {
         this.price = price;
     }
 
-
-    /**
-     * Get the value of title
-     *
-     * @return the value of title
-     */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * Set the value of title
-     *
-     * @param title new value of title
-     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -118,7 +97,6 @@ public class Book implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Book)) {
             return false;
         }
@@ -133,5 +111,4 @@ public class Book implements Serializable {
     public String toString() {
         return "lockingdemo.Book[ id=" + id + " ]";
     }
-    
 }

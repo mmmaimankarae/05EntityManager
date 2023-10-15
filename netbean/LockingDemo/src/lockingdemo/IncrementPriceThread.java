@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lockingdemo;
 
 import java.util.Random;
@@ -14,17 +9,11 @@ import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.Persistence;
 
-/**
- *
- * @author sarun
- */
 public class IncrementPriceThread extends Thread {
-
     @Override
     public void run() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LockingDemoPU");
         EntityManager em = emf.createEntityManager();
-        
         Book book = em.find(Book.class, 1L);
         Random rand = new Random();
         int num = rand.nextInt(10);
@@ -33,43 +22,32 @@ public class IncrementPriceThread extends Thread {
         } catch (InterruptedException ex) {
             Logger.getLogger(IncrementPriceThread.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //book.setPrice(book.getPrice() + 5);
+        /* book.setPrice(book.getPrice() + 5); เพิ่มราคาหนังสือแบบไม่Lock */
         em.getTransaction().begin();
         try {
+                /* กลไกการLock แบบมองโลกในแง่ดี */
             em.lock(book, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-            //em.lock(book, LockModeType.WRITE);
-            //em.lock(book, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
-            //em.lock(book, LockModeType.PESSIMISTIC_WRITE);
-            //em.lock(book, LockModeType.PESSIMISTIC_READ);
-            //em.lock(book, LockModeType.OPTIMISTIC);
-            //em.lock(book, LockModeType.READ);
+            /* << การทำงานเหมือนบรรทัดบน (Lock ไม่ให้เขียน)
+             * em.lock(book, LockModeType.WRITE); */
+            
+            /* Lock ให้รู้ว่าข้อมูลที่อ่านอยู่เป็นปัจจุบันหรือยัง
+             * em.lock(book, LockModeType.OPTIMISTIC);
+             * em.lock(book, LockModeType.READ); */
+            
+                /* กลไกการLock แบบมองโลกในแง่ร้าย */
+            /* Lock ไม่ให้เขียน และเพิ่มเลขVersion
+             * em.lock(book, LockModeType.PESSIMISTIC_FORCE_INCREMENT); */
+            
+            /* em.lock(book, LockModeType.PESSIMISTIC_WRITE);
+             * em.lock(book, LockModeType.PESSIMISTIC_READ); */
             em.persist(book);
-            book.setPrice(book.getPrice() + 5);
-            em.getTransaction().commit();
-                 
-            } 
-            catch (Exception e) {
-                System.out.println("failed 5");
-                           
-            } finally {
-                em.close();
-            }
-        
-    }
-
-    public void persist(Object object) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistentBookExamplePU");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        try {
-            em.persist(object);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
+            book.setPrice(book.getPrice() + 5); /* เพิ่มราคาหนังสือ 5 บาท */
+            em.getTransaction().commit();     
+        } 
+        catch (Exception e) { /* แจ้งเตือน */
+            System.out.println("failed 5");           
         } finally {
             em.close();
         }
     }
-    
 }

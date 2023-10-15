@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bookpersistenceexample;
 
 import java.io.Serializable;
@@ -17,14 +13,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author sarun
- */
 @Entity
 @Table(name = "BOOK")
 @XmlRootElement
 @NamedQueries({
+        /* Named Parameters, Named Queries */
     @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
     @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id"),
     @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title"),
@@ -33,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn"),
     @NamedQuery(name = "Book.findByNbofpages", query = "SELECT b FROM Book b WHERE b.nbofpages = :nbofpages"),
     @NamedQuery(name = "Book.findByIllustrations", query = "SELECT b FROM Book b WHERE b.illustrations = :illustrations")})
-@NamedNativeQuery(name="Book.findAllSql", query="select * from book")
+    @NamedNativeQuery(name="Book.findAllSql", query="select * from book")
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,7 +37,6 @@ public class Book implements Serializable {
     @Basic(optional = false)
     @Column(name = "TITLE")
     private String title;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRICE")
     private Double price;
     @Column(name = "DESCRIPTION")
@@ -57,6 +49,7 @@ public class Book implements Serializable {
     private Short illustrations;
 
     public Book() {
+        
     }
 
     public Book(Long id) {
@@ -133,7 +126,6 @@ public class Book implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Book)) {
             return false;
         }
@@ -148,5 +140,4 @@ public class Book implements Serializable {
     public String toString() {
         return "bookpersistenceexample.Book[ id=" + id + " ]";
     }
-    
 }
